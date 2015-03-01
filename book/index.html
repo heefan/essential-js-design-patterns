@@ -19,9 +19,7 @@
     <link rel="stylesheet" href="styles/style.css" >
     <link rel="stylesheet" href="styles/shCore.css">
     <link rel="stylesheet" href="styles/shThemeRDark.css">
-    <link rel="stylesheet" href="styles/sausage.css">
-    <link rel="stylesheet" href="styles/base.css">
-    <!-- endbuild -->
+    <link rel="stylesheet" href="styles/sausage.css"> <link rel="stylesheet" href="styles/base.css"> <!-- endbuild -->
   </head>
   <body>
     <!--[if lt IE 10]>
@@ -69,6 +67,14 @@
 <h2>Target Audience</h2>
 <p>This book is targeted at professional developers wishing to improve their knowledge of design patterns and how they can be applied to the JavaScript programming language.</p>
 <p>Some of the concepts covered (closures, prototypal inheritance) will assume a level of basic prior knowledge and understanding. If you find yourself needing to read further about these topics, a list of suggested titles is provided for convenience.</p>
+
+<div class="heefan-note">
+我关心的问题 （1 Mar 2015, 我是初学者）
+<ul>
+    <li>1. 如何使用共享变量。
+    <li>2. 一些成熟的设计规则。
+</ul>
+</div>
 
 <p>If you would like to learn how to write beautiful, structured and organized code, I believe this is the book for you.</p>
 
@@ -412,6 +418,10 @@ and I've modified it where necessary to suit our discussion in this section of t
 <p>Keep in mind that there will be patterns in this table that reference the concept of "classes". JavaScript is a class-less language, however classes can be simulated using functions.</p>
 
 <p>The most common approach to achieving this is by defining a JavaScript function where we then create an object using the <code>new</code> keyword. <code>this</code> can be used to help define new properties and methods for the object as follows:</p>
+
+<div class="heefan-note">
+使用function来模拟class
+</div>
 
 <pre class="brush: js">
 // A car "class"
@@ -1498,24 +1508,31 @@ myRevealingModule.start();
 <pre class="brush: js">
 var mySingleton = (function () {
 
+  // class是通过function来模拟的。
+  
   // Instance stores a reference to the Singleton
   var instance;
 
+  // 私有方法init
   function init() {
 
     // Singleton
 
     // Private methods and variables
+    // 初始化是有方法
     function privateMethod(){
         console.log( "I am private" );
     }
-
+    
+    // 初始化私有变量
     var privateVariable = "Im also private";
 
     var privateRandomNumber = Math.random();
 
     return {
 
+      // 这种return还是第一次见。
+      // 这个怎么就是共有方法了呢？publicMethod是关键字？
       // Public methods and variables
       publicMethod: function () {
         console.log( "The public can see me!" );
@@ -1531,8 +1548,11 @@ var mySingleton = (function () {
 
   };
 
+  //这个return，是定义这个function的return，每次调用这个function（class）时候，都会调用初始化，如果需要的话。
+  //所以，这个和Cpp的区别是，这个没有static的概念。
   return {
 
+    // 这个是提供给外部调用接口。
     // Get the Singleton instance if one exists
     // or create one if it doesn't
     getInstance: function () {
@@ -1546,8 +1566,9 @@ var mySingleton = (function () {
 
   };
 
-})();
+})(); // 这个最有有()，表示调用的意思？而不是定义。
 
+// bad singleton 就不看了。
 var myBadSingleton = (function () {
 
   // Instance stores a reference to the Singleton
@@ -1603,6 +1624,10 @@ console.log( badSingleA.getRandomNumber() !== badSingleB.getRandomNumber() ); //
 <p>What makes the Singleton is the global access to the instance (generally through <code>MySingleton.getInstance()</code>) as we don't (at least in static languages) call <code>new MySingleton()</code> directly. This is however possible in JavaScript.</p>
 
 <p>In the GoF book, the <i>applicability</i> of the Singleton pattern is described as follows:</p>
+
+<div class="heefan-note">
+在资源管理方面可以放肆用一下。试试看我的MyRecipeLasb
+</div>
 
 <p>
 <ul>
